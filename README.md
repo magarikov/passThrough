@@ -1,23 +1,17 @@
----
-page_type: sample
-description: "Demonstrates how to specify callback functions for different types of I/O requests."
-languages:
-- cpp
-products:
-- windows
-- windows-wdk
----
 
-# PassThrough File System Minifilter Driver
 
-The PassThrough minifilter demonstrates how to specify callback functions for different types of I/O requests.
+## Source 
+On the link below you can find source code of passThrough minifilter
+https://github.com/microsoft/Windows-driver-samples/tree/main/filesys/miniFilter/passThrough
 
-## Universal Windows Driver Compliant
+## Description
+This project adds some payload to the original code.
+How it works:
+1. You have to create file C:\Windows\conf.txt
+2. In conf.txt you should add description in the form:
+<rights (rwx)> <object path to file> <process>
+ex: "r-x \Device\HarddiskVolume3\Users\hola\Desktop\test_dir\secret.txt test.exe"
+<process> - means process, which will be able to use given rights
+3. Install and load driver
 
-This sample builds a Universal Windows Driver. It uses only APIs and DDIs that are included in OneCoreUAP.
-
-## Design and Operation
-
-The *PassThrough* minifilter does not have any real functionality. For each type of I/O operation, the same pre and post callback functions are called. These callback functions simply forward the I/O request to the next filter on the stack.
-
-For more information on file system minifilter design, start with the [File System Minifilter Drivers](https://docs.microsoft.com/windows-hardware/drivers/ifs/file-system-minifilter-drivers) section in the Installable File Systems Design Guide.
+ As a result, you have only one process that is allowed to manipulate chosen file.
